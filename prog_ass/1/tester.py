@@ -1,4 +1,4 @@
-import fifteen_puzzle
+from fifteen_puzzle import *
 
 def main():
 	tester = fifteen_puzzle()
