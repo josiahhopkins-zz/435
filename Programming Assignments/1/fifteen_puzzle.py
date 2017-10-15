@@ -1,0 +1,2 @@
+class fifteen_puzzle:
+	
