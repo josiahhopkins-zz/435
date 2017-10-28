@@ -14,12 +14,18 @@ class fifteen_node:
 
 
 	def __init__(self, puzzle, parent):
-		self.depth = parent.get_depth() + 1
+		if parent == None:
+			self.depth = 0
+		else: 
+			self.depth = parent.get_depth() + 1
 		self.parent = parent
-        self.puzzle = puzzle
+        	self.puzzle = puzzle
+	
+	def __hash__(self):
+		return hash(self.puzzle.format())
 
-    def __eq__(self, other):
-        if isinstance(other, self.__class__):
-            return self.puzzle == other.puzzle
-        else:
-            return False
+    	def __eq__(self, other):
+        	if isinstance(other, self.__class__):
+           		return self.puzzle == other.puzzle
+        	else:
+            		return False

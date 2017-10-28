@@ -1,5 +1,6 @@
 from fifteen_puzzle import *
-def test_puzzle_functionality()
+from searches import *
+def test_puzzle_functionality():
 	tester = fifteen_puzzle()
 	print "Is in order: %s" % str(tester.is_in_order())
 	print_puzzle(tester)

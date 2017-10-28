@@ -1,14 +1,13 @@
 class fifteen_puzzle:	
-	def __init__(self):
+	def __init__(self, data=range(16)):	
+		to_data = data
 		self.empty = 15
 		self.data = range(16)
-		return fifteen_puzzle(self.data)
-
-	def __init__(self, data):
 		keys = range(15)
 		values = [" " * (3 - (len(str(i + 1)))) + str(i + 1) for i in range(15)]	
 		self.mapper = dict(zip(keys, values))
 		self.mapper.update({15:" XX"})
+		self.data = to_data
 
 	def shift(self, shift_key):
 		self.data[self.empty] = self.data[self.empty + shift_key]
@@ -38,7 +37,7 @@ class fifteen_puzzle:
 		return to_return
 
 	def __eq__(self, other):
-        if isinstance(other, self.__class__):
-            return self.data == other.data
-        else:
-            return False
+        	if isinstance(other, self.__class__):
+            		return self.data == other.data
+        	else:
+            		return False
