@@ -24,8 +24,8 @@ class fifteen_node:
 	def __hash__(self):
 		return hash(self.puzzle.format())
 
-    	def __eq__(self, other):
-        	if isinstance(other, self.__class__):
-           		return self.puzzle == other.puzzle
-        	else:
-            		return False
+	def __eq__(self, other):
+    	if isinstance(other, self.__class__):
+       		return self.puzzle == other.puzzle
+    	else:
+        		return False

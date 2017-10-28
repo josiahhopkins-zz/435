@@ -104,6 +104,7 @@ class BFS(uninformed_search):
 			while len(self.fringe) != 0:
 				self.utility_stack.append(self.fringe.pop())
 		popping = self.utility_stack.pop()
+		print "Trying to add type %s" (str(type(popping)))
 		self.visited.add(popping)
 		return popping
 
