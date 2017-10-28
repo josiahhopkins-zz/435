@@ -1,9 +1,12 @@
 class fifteen_puzzle:	
 	def __init__(self):
-		keys = range(15)
-		values = [" " * (3 - (len(str(i + 1)))) + str(i + 1) for i in range(15)]	
 		self.empty = 15
 		self.data = range(16)
+		return fifteen_puzzle(self.data)
+
+	def __init__(self, data):
+		keys = range(15)
+		values = [" " * (3 - (len(str(i + 1)))) + str(i + 1) for i in range(15)]	
 		self.mapper = dict(zip(keys, values))
 		self.mapper.update({15:" XX"})
 
@@ -21,6 +24,7 @@ class fifteen_puzzle:
 			self.shift(-1)
 		elif op == "right" and self.empty% 4 != 3:
 			self.shift(1)
+		return self
 	
 	def is_in_order(self):
 		return self.data == sorted(self.data) 
@@ -32,3 +36,9 @@ class fifteen_puzzle:
 				to_return += self.mapper[j]
 			to_return += "\n"
 		return to_return
+
+	def __eq__(self, other):
+        if isinstance(other, self.__class__):
+            return self.data == other.data
+        else:
+            return False
