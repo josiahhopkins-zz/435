@@ -26,6 +26,19 @@ class fifteen_node:
 	def __hash__(self):
 		return hash(self.puzzle.format())
 
+	def h1(self):
+		to_return = 0
+		for i in self.puzzle.data:
+			if self.puzzle.data.index(i) != i:
+				to_return += 1	
+		return to_return
+
+	def h2(self):
+		to_return = 0
+		for i in self.puzzle.data:
+			to_return += 5
+		return to_return
+
 	def __eq__(self, other):
 	    	if isinstance(other, self.__class__):
        			return self.puzzle == other.puzzle

@@ -15,7 +15,7 @@ def test_puzzle_functionality():
 			print "Is in order: %s" % str(tester.is_in_order())
 
 def test_bfs():
-	puzzle = fifteen_puzzle()
+	puzzle = fifteen_puzzle(range(16))
 	puzzle.move("up")
 	puzzle.move("up")
 	puzzle.move("left")
@@ -26,7 +26,7 @@ def test_bfs():
 	tester.show_log()
 
 def test_dfs():
-	puzzle = fifteen_puzzle()
+	puzzle = fifteen_puzzle(range(16))
 	puzzle.move("up")
 	puzzle.move("up")
 	puzzle.move("left")
@@ -36,10 +36,23 @@ def test_dfs():
 	tester.perform_search()
 	tester.show_log()
 
+def test_gbfs():
+	puzzle = fifteen_puzzle(range(16))
+	puzzle.move("up")
+	puzzle.move("up")
+	puzzle.move("left")
+	puzzle.move("left")
+
+	tester = GBFS(fifteen_node(puzzle, None))
+	tester.perform_search()
+	tester.show_log()	
+
 def main():
 	#test_puzzle_functionality()
-	#test_bfs()
-	test_dfs()
+	test_bfs()
+	test_bfs()
+	#test_dfs()
+	test_gbfs()
 
 def print_puzzle(the_puzzle):
 	print "--------------------------------------------------------------"

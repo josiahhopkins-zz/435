@@ -1,13 +1,11 @@
 class fifteen_puzzle:	
-	def __init__(self, data=range(16)):
-			
-		to_data = data
+	def __init__(self, data):
 		self.data = range(16)
 		keys = range(15)
 		values = [" " * (3 - (len(str(i + 1)))) + str(i + 1) for i in range(15)]	
 		self.mapper = dict(zip(keys, values))
 		self.mapper.update({15:" XX"})
-		self.data = to_data
+		self.data = data
 		self.empty = self.data.index(15)
 
 	def shift(self, shift_key):

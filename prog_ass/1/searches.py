@@ -1,4 +1,5 @@
 from fifteen_node import *
+from heapq import *
 from fifteen_puzzle import *
 class search:
 
@@ -9,7 +10,9 @@ class search:
 
 	def __init__(self, root):
 		self.add_to_fringe(root)
-		
+		visited = set()
+		max_depth = 0
+		max_fringe_size = 0		
 
 	def get_visited(self):
 		return visited
@@ -48,6 +51,7 @@ class search:
 
 	def visit_node(self):
 		visiting = self.pop()
+
 		self.visited.add(visiting)
 		if visiting.get_depth() > self.max_depth:
 			self.max_depth = visiting.get_depth()
@@ -56,12 +60,14 @@ class search:
 				self.add_to_fringe(childr_of_visiting)
 		if len(self.fringe) > self.max_fringe_size:
 			self.max_fringe_size = len(self.fringe)
-
+		print "\n\ncurrently visiting \n%s" % visiting.puzzle.format() 
 	def add_to_fringe(self, node):
 		raise NotImplementedError
 
 	def perform_search(self):
 		goal = fifteen_node(fifteen_puzzle(data=range(16)), None)
+		
+		print "goal :\n%s" % goal.puzzle.format()
 		while goal not in self.visited:
 			self.visit_node()
 
@@ -79,10 +85,10 @@ class heuristic_search(search):
 		return node.get_depth()
 
 	def get_node_cost(self, node):
-		raise NotImplementedError
+		return node.get_depth() 
 
 	def pop(self):
-		priority, node = heappop(fringe)
+		priority, node = heappop(self.fringe)
 		return node
 
 	def add_to_fringe(self, node):
@@ -125,3 +131,26 @@ class DFS(uninformed_search):
 		popping = self.fringe.pop()
 		self.visited.add(popping)
 		return popping
+
+
+
+class GBFS(heuristic_search):
+	next_level = []
+
+	def add_to_fringe(self, node):
+		if node.get_depth > self.max_depth:
+			heappush(self.next_level, (self.get_node_cost(node), node))
+		else:
+			heappush(self.fringe, (self.get_node_cost(node), node))
+
+	def get_fringe_size(self):
+		return len(self.fringe) + len(self.next_level)
+
+	def get_distance_to_goal(self, node):
+		return node.h1()
+
+	def pop(self):
+		if len(self.fringe) == 0:
+			self.fringe = self.next_level
+			self.next_level = []
+		return heuristic_search.pop(self)
