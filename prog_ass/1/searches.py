@@ -2,17 +2,12 @@ from fifteen_node import *
 from heapq import *
 from fifteen_puzzle import *
 class search:
-
-	visited = set()
-	max_depth = 0
-	max_fringe_size = 0
-
-
 	def __init__(self, root):
 		self.add_to_fringe(root)
 		visited = set()
 		max_depth = 0
 		max_fringe_size = 0		
+		print "init search"		
 
 	def get_visited(self):
 		return visited
@@ -51,6 +46,7 @@ class search:
 
 	def visit_node(self):
 		visiting = self.pop()
+		self.show_log()
 
 		self.visited.add(visiting)
 		if visiting.get_depth() > self.max_depth:
@@ -65,6 +61,7 @@ class search:
 		raise NotImplementedError
 
 	def perform_search(self):
+		print "-----------------------------------------------------------------------------------------------"
 		goal = fifteen_node(fifteen_puzzle(data=range(16)), None)
 		
 		print "goal :\n%s" % goal.puzzle.format()
@@ -76,7 +73,11 @@ class search:
 
 
 class heuristic_search(search):
-	fringe = []
+
+	def __init__(self, node):
+		search.__init__(self, node)
+		self.fringe = []
+		print "init heuristic"
 
 	def get_distance_to_goal(self, node):
 		raise NotImplementedError
@@ -97,13 +98,21 @@ class heuristic_search(search):
 
 
 class uninformed_search(search):
-	fringe = []
 
+	def __init__(self, node):
+		search.__init__(self, node)
+		self.fringe = []
+		print "init uninformed"
 
 
 class BFS(uninformed_search):
-	utility_stack = []	
-	
+
+	def __init__(self, node):
+		uninformed_search.__init__(self, node)
+		self.utility_stack = []
+		self.fringe = []
+		print "init BFS"	
+
 	def add_to_fringe(self, node):
 		self.fringe.append(node)	
 
@@ -121,7 +130,7 @@ class BFS(uninformed_search):
 
 class DFS(uninformed_search):
 	
-	def add_to_fringe(self, node):
+	def add_to_fringe(node):
 		self.fringe.append(node)
 
 	def get_fringe_size(self):
@@ -135,7 +144,10 @@ class DFS(uninformed_search):
 
 
 class GBFS(heuristic_search):
-	next_level = []
+
+	def __init__(self, node):
+		heuristic_search.__init__(self, node)
+		self.next_level = []
 
 	def add_to_fringe(self, node):
 		if node.get_depth > self.max_depth:
