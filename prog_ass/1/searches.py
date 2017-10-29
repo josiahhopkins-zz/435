@@ -25,43 +25,45 @@ class search:
 
 	
 	def get_expanded_number(self):
-		return visiting.size()
+		return len(self.visited)
+
+	
+	def get_fringe_size(self):
+		raise NotImplementError	
 
 
 	def get_max_fringe_size(self):
-		return max_fringe_size
+		return self.max_fringe_size
 
 
 	def get_max_depth(self):
-		return max_depth
+		return self.max_depth
 
 
 	def get_number_of_created_nodes(self):
-		return get_visited.size() + get_fringe.size()
+		return len(self.visited) + self.get_fringe_size()
 
-	def print_log(self):
-		print "%d, %d, %d, %d" % (self.get_depth(), self.get_number_of_created_nodes(), self.get_expanded_number(), self.get_max_fringe_size())
+	def show_log(self):
+		print "%d, %d, %d, %d" % (self.get_max_depth(), self.get_number_of_created_nodes(), self.get_expanded_number(), self.get_max_fringe_size())
 
 	def visit_node(self):
 		visiting = self.pop()
-		visited.add(visiting)
+		self.visited.add(visiting)
+		if visiting.get_depth() > self.max_depth:
+			self.max_depth = visiting.get_depth()
 		for childr_of_visiting in visiting.get_children():
-			if childr_of_visiting.get_depth() > max_depth:
-				max_depth = childr_of_visiting.get_depth()
-		if childr_of_visiting not in visited:
-			add_to_fringe(childr_of_visiting)
-		if len(fringe) > max_fringe_size:
-			max_fringe_size = len(fringe)
+			if childr_of_visiting not in self.visited:
+				self.add_to_fringe(childr_of_visiting)
+		if len(self.fringe) > self.max_fringe_size:
+			self.max_fringe_size = len(self.fringe)
 
 	def add_to_fringe(self, node):
 		raise NotImplementedError
 
 	def perform_search(self):
-		goal = fifteen_node(fifteen_puzzle(), None)
+		goal = fifteen_node(fifteen_puzzle(data=range(16)), None)
 		while goal not in self.visited:
 			self.visit_node()
-			
-
 
 
 
@@ -99,17 +101,27 @@ class BFS(uninformed_search):
 	def add_to_fringe(self, node):
 		self.fringe.append(node)	
 
+	def get_fringe_size(self):
+		return len(self.fringe) + len(self.utility_stack)
+
 	def pop(self):
 		if len(self.utility_stack) == 0:
 			while len(self.fringe) != 0:
 				self.utility_stack.append(self.fringe.pop())
+		
 		popping = self.utility_stack.pop()
-		print "Trying to add type %s" (str(type(popping)))
 		self.visited.add(popping)
 		return popping
 
 class DFS(uninformed_search):
+	
+	def add_to_fringe(self, node):
+		self.fringe.append(node)
+
+	def get_fringe_size(self):
+		return len(self.fringe)
+
 	def pop(self):
-		popping = fringe.pop()
-		visited.add(popping)
+		popping = self.fringe.pop()
+		self.visited.add(popping)
 		return popping

@@ -1,10 +1,12 @@
+from fifteen_puzzle import *
+
 class fifteen_node:
 
 
-	def get_depth():
+	def get_depth(self):
 		return self.depth
 
-	def get_children():
+	def get_children(self):
 		up = fifteen_node(fifteen_puzzle(self.puzzle.data[:]).move("up"), self)
 		down = fifteen_node(fifteen_puzzle(self.puzzle.data[:]).move("down"), self)
 		left = fifteen_node(fifteen_puzzle(self.puzzle.data[:]).move("left"), self)
@@ -25,7 +27,7 @@ class fifteen_node:
 		return hash(self.puzzle.format())
 
 	def __eq__(self, other):
-    	if isinstance(other, self.__class__):
-       		return self.puzzle == other.puzzle
-    	else:
+	    	if isinstance(other, self.__class__):
+       			return self.puzzle == other.puzzle
+    		else:
         		return False
