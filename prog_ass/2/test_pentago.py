@@ -6,10 +6,14 @@ def base_test():
 
 def move_test():
 	game = pentago()
-	game.make_move(0, 0, 1, 0, True)
+	game = game.place_tile_with_sector(0, 0, 1)
+	game.show_log()
+	game = game.rotate(0, True)
 	game.show_log()
 	print "\n\n"
-	game.make_move(2, 2, 2, 0, False)
+	game = game.place_tile_with_sector(2,2,2)
+	game.show_log()
+	game = game.rotate(0, False)
 	game.show_log()
 
 if __name__ == "__main__":
