@@ -6,6 +6,7 @@ class pentago:
 		self.white_move = True
 		self.win_state = ' '
 		self.board = []
+		self.value = None
 		empty = [' ', ' ', ' ']
 		for i in range(4):
 			self.board.append([])
@@ -18,6 +19,7 @@ class pentago:
 		new.board = deepcopy(self.board)
 		new.win_state = self.win_state
 		new.white_move = self.white_move		
+		new.value = None
 		return new
 
 	def place_tile_with_sector(self, sector, row, column):
@@ -147,18 +149,33 @@ class pentago:
 				place = (place[0] + 1, place[1])
 			if over:
 				place = (place[0], place[1] + 1)					
-			if self.get
 			if match != self.get_tile(place[0], place[1]):
-				return i - 1
+				return i
 			return 4 + 1
-	
-	def aggregate_directions(self, start_row, start_col):
-		to_return = 0
-		to_return += self.get_in_a_row(		
 
 	def heuristic(self):
+		if self.win_state == 'b':
+			return -500
+		if self.win_state == 'w':
+			return 500
+		if self.win_state == 't':
+			return 0
 		total = 0
+		multiplier = 1
 		for i in range(36):
-			total = self.get_in_a_row(i % 6, int(math.floor(i / 6)), True, False)
-			total = self.are_the_same(i % 6, int(math.floor(i / 6)), False, True)
-			total = self.are_the_same(i % 6, int(math.floor(i / 6)), True, True)
+			tile =  self.get_tile(i % 6, int(math.floor(i / 6))) 
+			if tile == 'b':
+				multiplier = -1
+			elif tile == 'w':
+				multiplier = 1
+			else:
+				multiplier = 0 
+			total += multiplier * self.get_in_a_row(i % 6, int(math.floor(i / 6)), True, False)
+			total += multiplier * self.get_in_a_row(i % 6, int(math.floor(i / 6)), False, True)
+			total += multiplier * self.get_in_a_row(i % 6, int(math.floor(i / 6)), True, True)
+		return total
+
+	def get_heuristic(self):
+		if self.value == None:
+			self.value = self.heuristic()
+		return self.value
