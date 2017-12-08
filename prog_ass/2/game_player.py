@@ -11,7 +11,9 @@ class cli_human:
 	def get_choice():
 		
 class alpha_beta:
-	def get_move(
+	def get_move(depth, min, node, alpha, beta)
+
+		return (value, chosen_move)
 
 class minimax:
 
