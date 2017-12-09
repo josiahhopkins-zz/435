@@ -1,3 +1,4 @@
+from text_analysis import *
 import random
 import bisect
 
@@ -19,20 +20,24 @@ class producer_analyzer:
 				corespondant.append(value)
 			the_map[key] = (total, count_values, corespondant)
 		return the_map
+	
+	def get_choice(self, second_last, last):
+		brute_index = random.randint(self.count[(second_last, last)][0])
+		true_index = bisect.bisect_left(self.count[(second_last, last)][1]) - 1
+		return self.count[(second_last, last)][2][true_index]
 
 	def generate_file(self, output_file):
 		god_i_am_so_ready_to_graduate = open(output_file, 'w')
 		second_last = random.choice(self.one_layer.keys())
-		last = self.one_layer[random.choice(self.one_layer.keys())]
+		print second_last
+		last = random.choice(self.one_layer[second_last])
+		print last
+		#print second_last, last
 		god_i_am_so_ready_to_graduate.write(second_last + " ")
 		god_i_am_so_ready_to_graduate.write(last + " ")
-		for i in range(998)
+		for i in range(998):
 			new = self.get_choice(second_last, last)
 			god_i_am_so_ready_to_graduate.write(new + " ")
 			second_last = last
 			last = new
 
-	def get_choice(self, second_last, last)
-		brute_index = random.randint(self.count[0])
-		true_index = bisect.bisect_left(self.count((second_last, last))[1]) - 1
-		return self.count((second_last, last))[2][true_index]
