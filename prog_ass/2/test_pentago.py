@@ -1,4 +1,6 @@
+from node_pentago import *
 from pentago import *
+from game_player import *
 
 def base_test():
 	game = pentago()

@@ -1,19 +1,23 @@
-def alpha_beta(depth, min, node, alpha, beta)
-	if node.game_state.win_state != ' ' or depth == 0:
-		return node.game_state.heuristic()
+from pentago import *
+
+def alpha_beta(depth, minim, node, alpha, beta):
+	if node.game.win_state != ' ' or depth == 0:
+		return node.game.heuristic()
 	value = 100000 
 	chosen_move = None
-	if not min:
+	if minim:
 		value = -100000
 	for child in node.get_children():
-		child_value = alpha_beta(depth -1 , not min, child, alpha, beta)
-		if child_value != None
-			if min:
+		child_value = None
+		if child != None:
+			child_value = alpha_beta(depth -1 , not minim, child, alpha, beta)
+		if child_value != None:
+			if minim:
 				if child_value > value:
 					chosen_move = child.last_move
 				value = max(value, child_value)
 
-				alpha = max(value, alpha)
+				alpha = max(value, chosen_move)
 			else: 
 				if child_value < value:
 					chosen_move = child.last_move
@@ -23,16 +27,18 @@ def alpha_beta(depth, min, node, alpha, beta)
 				return (value, chosen_move)
 	return (value, chosen_move)
 
-def minimax(depth, min, node):
+def minimax(depth, minim, node):
 	if node.game_state.win_state != ' ' or depth == 0:
 		return node.game_state.heuristic()
 	value = 100000 
 	chosen_move = None
-	if not min:
+	if not minim:
 		value = -100000
 	for child in node.get_children():
-		child_value = alpha_beta(depth -1 , not min, child)
-		if min:
+		child_value = None
+		if child != None:
+			child_value = alpha_beta(depth -1 , not minim, child)
+		if minim:
 			if child_value > value:
 				chosen_move = child.last_move
 			value = max(value, child_value)
@@ -61,4 +67,5 @@ class game:
 				self.p2 = alpha_beta()	
 	
 	def play_move():
-		if self.current_game.game.move_state:	
+		if self.current_game.game.move_state:
+			print " NOT IMPLEMENTED"	

@@ -32,10 +32,8 @@ class pentago:
 			else:
 				move = 'b'	
 			to_return.board[sector][row][column] = move
-			print "was " + str(self.white_move)
 			to_return.white_move = not self.white_move
 		to_return.has_won()
-		print "now " + str(to_return.white_move)
 		return to_return
 		
 	def place_tile(self, row, col):

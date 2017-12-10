@@ -12,6 +12,7 @@ class pentago_node:
 			placed_move_board = self.game.place_tile(i % 6, i / 6)
 			for j in range(4):
 				for i in range(2):
-					to_return.append(pentago_node(placed_move_board.rotate(j, i == 1), (i % 6, i / 6, j, i == 1)))
+					if placed_move_board != None:
+						to_return.append(pentago_node(placed_move_board.rotate(j, i == 1), (i % 6, i / 6, j, i == 1)))
 		self.children = to_return
 		return self.children
